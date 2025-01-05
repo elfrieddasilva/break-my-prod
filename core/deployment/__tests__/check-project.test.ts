@@ -1,16 +1,14 @@
 import { expect, describe, it, beforeEach } from "vitest";
 import { CheckProjectUsecase } from "../application/usecase/check-project/check-project.usecase";
-import { CheckProjectService } from "../application/usecase/check-project/check-project.service";
-import { CheckProjectRepository } from "../application/repository/check-project.repository";
-import { CheckProjectRepositoryMock } from "./mocks/check-project.repository.mock";
-import { CheckProjectServiceMock } from "./mocks/check-project.service.mock";
+import { CheckProjectService } from "../application/usecase/check-project/service/check-project.service";
+
 import { CheckProjectPayload } from "../application/usecase/check-project/check-project.payload";
 import { CheckProjectError } from "../application/usecase/check-project/check-project.error";
+import { CheckProjectServiceImpl } from "../application/usecase/check-project/service/check-project.service.impl";
 
 describe('check project usecase', () => {
     let checkProjectUsecase: CheckProjectUsecase;
     let checkProjectService: CheckProjectService;
-    let checkProjectRepository: CheckProjectRepository;
     let checkProjectError: Error;
     const projectPayload: CheckProjectPayload = {
         githubUrl: "https://www.github.com/amir/prog"
@@ -19,8 +17,7 @@ describe('check project usecase', () => {
         githubUrl: "randomUrl.com"
     }
     beforeEach(() => {
-        checkProjectRepository = new CheckProjectRepositoryMock();
-        checkProjectService = new CheckProjectServiceMock(checkProjectRepository);
+        checkProjectService = new CheckProjectServiceImpl();
         checkProjectUsecase = new CheckProjectUsecase(checkProjectService);
     })
     it('should return valid project type for valid github url', async () => {

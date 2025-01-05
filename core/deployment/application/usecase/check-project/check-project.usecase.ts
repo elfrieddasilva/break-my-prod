@@ -1,6 +1,6 @@
 import { CheckProjectError } from "./check-project.error";
 import { CheckProjectPayload } from "./check-project.payload";
-import { CheckProjectService } from "./check-project.service";
+import { CheckProjectService } from "./service/check-project.service";
 
 export class CheckProjectUsecase {
     private checkProjectService: CheckProjectService;

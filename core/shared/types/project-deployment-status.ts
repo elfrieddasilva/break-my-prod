@@ -1,0 +1,1 @@
+export type ProjectDeploymentStatus =  'ANALYZING' | 'DEPLOYING' | 'COMPLETED' | 'FAILED';

@@ -1,11 +1,10 @@
-import { CheckProjectRepository } from "../../application/repository/check-project.repository";
-import { ProjectType } from "../../application/usecase/check-project/check-project.service";
+import { ProjectType } from "@/core/shared/types/project-type";
+import { InvalidGithubProjectError, ProjectTypeError } from "../check-project.error";
+import { CheckProjectService } from "./check-project.service";
 
-export class InvalidGithubProjectError extends Error {
-    super(message: string) { }
-}
 
-export class CheckProjectRepositoryMock implements CheckProjectRepository {
+
+export class CheckProjectServiceImpl implements CheckProjectService {
    async validateGithubUrl(url: string): Promise<boolean> {
         try {
             if (!this.isGithubUrl(url))
@@ -52,8 +51,13 @@ export class CheckProjectRepositoryMock implements CheckProjectRepository {
         return (url.includes("github.com"))
     }
 
-    detectProjectType(githubUrl: string): Promise<ProjectType> {
+    async detectProjectType(githubUrl: string): Promise<ProjectType> {
+      try {
+        await this.validateGithubUrl(githubUrl);
         return Promise.resolve("nodejs");
+      } catch (error) {
+        throw new ProjectTypeError((error as Error).message);
+      }
     }
-
+    
 }
