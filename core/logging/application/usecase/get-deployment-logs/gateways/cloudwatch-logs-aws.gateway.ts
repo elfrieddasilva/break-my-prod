@@ -81,10 +81,10 @@ export class CloudWatchLogsAWSGateway implements GetDeploymentLogsAWSGateway {
 
             const results = await query.executeQuery(queryString);
 
-            return results.map((result: any) => {
-                const timestamp = result.find((field: any) => field.field === '@timestamp')?.value;
-                const message = result.find((field: any) => field.field === '@message')?.value;
-                return new DeploymentLog(message || 'No message', new Date(timestamp));
+            return results.map((result: ResultField[]) => {
+                const timestamp = result.find((field: ResultField) => field.field === '@timestamp')?.value;
+                const message = result.find((field: ResultField) => field.field === '@message')?.value;
+                return new DeploymentLog(message || 'No message', new Date(timestamp!));
             });
         } catch (error) {
             console.error('Error fetching deployment logs:', error);
