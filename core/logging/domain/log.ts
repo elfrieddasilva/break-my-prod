@@ -1,9 +1,9 @@
 export class DeploymentLog {
-    date!: Date;
+    timestamp!: Date;
     message!: string;
 
     constructor(message: string, date: Date) {
         this.message = message;
-        this.date = date;
+        this.timestamp = date;
     }
 }

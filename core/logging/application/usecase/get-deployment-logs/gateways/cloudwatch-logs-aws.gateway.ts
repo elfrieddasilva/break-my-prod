@@ -1,6 +1,6 @@
-import { CloudWatchLogsClient, StartQueryCommand, GetQueryResultsCommand } from "@aws-sdk/client-cloudwatch-logs";
+import { CloudWatchLogsClient, StartQueryCommand, GetQueryResultsCommand, GetQueryResultsCommandOutput, ResultField } from "@aws-sdk/client-cloudwatch-logs";
 import { GetDeploymentLogsAWSGateway, GetDeploymentLogsParams } from './aws-get-deployment-logs.gateway';
-import { DeploymentLog } from '@/core/logging/domain/log';
+import { DeploymentLog } from '../../../../../logging/domain/log';
 
 type QueryConfigParams = {
     logGroupNames: string[],
@@ -8,7 +8,7 @@ type QueryConfigParams = {
     queryConfig: { limit: number }
 }
 
-class CloudWatchQuery {
+export class CloudWatchQuery {
     private client: CloudWatchLogsClient;
     private logGroupNames: string[];
     private startTime: number;
@@ -23,7 +23,7 @@ class CloudWatchQuery {
         this.limit = queryConfig.limit;
     }
 
-    async executeQuery(queryString: string): Promise<any> {
+    async executeQuery(queryString: string): Promise<ResultField[][]> {
         try {
             const startQueryCommand = new StartQueryCommand({
                 logGroupNames: this.logGroupNames,
@@ -34,15 +34,15 @@ class CloudWatchQuery {
             });
 
             const queryResponse = await this.client.send(startQueryCommand);
-            const queryId = queryResponse.queryId;
+            const queryId = queryResponse?.queryId;
 
             if (!queryId) {
                 throw new Error('Failed to start query');
             }
 
             // Poll for results
-            let results;
-            do {
+            let results: GetQueryResultsCommandOutput;
+            do { 
                 await new Promise(resolve => setTimeout(resolve, 1000)); // Wait 1 second between polls
                 const getResultsCommand = new GetQueryResultsCommand({ queryId });
                 results = await this.client.send(getResultsCommand);
