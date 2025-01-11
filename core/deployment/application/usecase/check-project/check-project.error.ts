@@ -1,13 +1,13 @@
-export class CheckProjectError extends Error {
+export class CheckProjectException extends Error {
     super(message: string) {
 
     }
 }
 
-export class InvalidGithubProjectError extends Error {
+export class InvalidGithubProjectException extends Error {
     super(message: string) { }
 }
 
-export class ProjectTypeError extends Error {
+export class ProjectTypeException extends Error {
     super(message: string) { }
 }

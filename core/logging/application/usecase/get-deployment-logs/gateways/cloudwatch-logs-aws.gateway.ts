@@ -1,6 +1,7 @@
 import { CloudWatchLogsClient, StartQueryCommand, GetQueryResultsCommand, GetQueryResultsCommandOutput, ResultField } from "@aws-sdk/client-cloudwatch-logs";
 import { GetDeploymentLogsAWSGateway, GetDeploymentLogsParams } from './aws-get-deployment-logs.gateway';
 import { DeploymentLog } from '../../../../../logging/domain/log';
+import { CloudWatchLogsAWSGatewayException } from "./cloudwatch-logs-aws-gateway.error";
 
 type QueryConfigParams = {
     logGroupNames: string[],
@@ -50,7 +51,6 @@ export class CloudWatchQuery {
 
             return results.results || [];
         } catch (error) {
-            console.error('Error executing CloudWatch query:', error);
             throw error;
         }
     }
@@ -87,8 +87,7 @@ export class CloudWatchLogsAWSGateway implements GetDeploymentLogsAWSGateway {
                 return new DeploymentLog(message || 'No message', new Date(timestamp!));
             });
         } catch (error) {
-            console.error('Error fetching deployment logs:', error);
-            throw error;
+            throw new CloudWatchLogsAWSGatewayException((error as Error).message);
         }
     }
 }

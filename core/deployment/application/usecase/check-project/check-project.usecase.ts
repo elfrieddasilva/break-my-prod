@@ -1,4 +1,4 @@
-import { CheckProjectError } from "./check-project.error";
+import { CheckProjectException } from "./check-project.error";
 import { CheckProjectPayload } from "./check-project.payload";
 import { CheckProjectService } from "./service/check-project.service";
 
@@ -15,7 +15,7 @@ export class CheckProjectUsecase {
             }
             return projectType;
         } catch (error) {
-            throw new CheckProjectError((error as Error).message);
+            throw new CheckProjectException((error as Error).message);
         }
     }
 }

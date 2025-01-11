@@ -1,5 +1,5 @@
 import { ProjectType } from "@/core/shared/types/project-type";
-import { InvalidGithubProjectError, ProjectTypeError } from "../check-project.error";
+import { InvalidGithubProjectException, ProjectTypeException } from "../check-project.error";
 import { CheckProjectService } from "./check-project.service";
 
 
@@ -15,7 +15,7 @@ export class CheckProjectServiceImpl implements CheckProjectService {
             return Promise.resolve(false);
 
         } catch (error) {
-            throw new InvalidGithubProjectError((error as Error).message);
+            throw new InvalidGithubProjectException((error as Error).message);
         }
 
     }
@@ -56,7 +56,7 @@ export class CheckProjectServiceImpl implements CheckProjectService {
         await this.validateGithubUrl(githubUrl);
         return Promise.resolve("nodejs");
       } catch (error) {
-        throw new ProjectTypeError((error as Error).message);
+        throw new ProjectTypeException((error as Error).message);
       }
     }
     

@@ -3,7 +3,7 @@ import { CheckProjectUsecase } from "../application/usecase/check-project/check-
 import { CheckProjectService } from "../application/usecase/check-project/service/check-project.service";
 
 import { CheckProjectPayload } from "../application/usecase/check-project/check-project.payload";
-import { CheckProjectError } from "../application/usecase/check-project/check-project.error";
+import { CheckProjectException } from "../application/usecase/check-project/check-project.error";
 import { CheckProjectServiceImpl } from "../application/usecase/check-project/service/check-project.service.impl";
 
 describe('check project usecase', () => {
@@ -30,7 +30,7 @@ describe('check project usecase', () => {
             expect(projectType).toEqual("unknown"); 
         } catch (error) {
             checkProjectError = (error as Error);           
-            expect(checkProjectError).toBeInstanceOf(CheckProjectError)
+            expect(checkProjectError).toBeInstanceOf(CheckProjectException)
         }
     })
 })

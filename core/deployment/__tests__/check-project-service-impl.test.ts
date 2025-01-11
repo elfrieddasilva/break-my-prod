@@ -1,5 +1,5 @@
 import { expect, describe, it, test, beforeEach } from "vitest";
-import { InvalidGithubProjectError } from "../application/usecase/check-project/check-project.error";
+import { InvalidGithubProjectException } from "../application/usecase/check-project/check-project.error";
 import { CheckProjectService } from "../application/usecase/check-project/service/check-project.service";
 import { CheckProjectServiceImpl } from "../application/usecase/check-project/service/check-project.service.impl";
 
@@ -26,7 +26,7 @@ describe('check project service impl', () => {
             expect(isValidGithubUrl).toBe(false);
         } catch (error) {
             checkProjectServiceError = (error as Error);
-            expect(checkProjectServiceError).toBeInstanceOf(InvalidGithubProjectError)
+            expect(checkProjectServiceError).toBeInstanceOf(InvalidGithubProjectException)
         }
     })
     it('should parse to valid url for http url', async () => {
@@ -48,7 +48,7 @@ describe('check project service impl', () => {
             expect(isValidGithubUrl).toBe(false);
         } catch (error) {
             checkProjectServiceError = (error as Error);
-            expect(checkProjectServiceError).toBeInstanceOf(InvalidGithubProjectError)
+            expect(checkProjectServiceError).toBeInstanceOf(InvalidGithubProjectException)
         }
     });
     it('should return valid for valid github url', async () => {

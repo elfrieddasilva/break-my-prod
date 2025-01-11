@@ -1,4 +1,4 @@
-export class DeployProjectError extends Error {
+export class DeployProjectException extends Error {
     super(message: string) {
         
     }
