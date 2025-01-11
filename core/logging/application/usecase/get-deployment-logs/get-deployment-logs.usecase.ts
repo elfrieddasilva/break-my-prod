@@ -1,4 +1,3 @@
-import { GetDeploymentLogsPayload } from "./get-deployment-logs.payload";
 import { GetDeploymentLogsService } from "./service/get-deployment-logs.service";
 
 export class GetDeploymentLogsUsecase {
