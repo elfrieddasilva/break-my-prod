@@ -7,7 +7,7 @@ export type ProjectCreationParams = {
 }
 
 export interface DeployAWSGateway {
-    createAWSDeploymentProject(params: ProjectCreationParams): Promise<void>;
-    triggerProjectDeployment(): Promise<void>
+    createAWSDeploymentProject(params: ProjectCreationParams): Promise<string>;
+    triggerProjectDeployment(projectName: string): Promise<string>
 }
 
