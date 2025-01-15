@@ -1,8 +1,8 @@
 import { CloudWatchLogsClient, StartQueryCommand, GetQueryResultsCommand } from "@aws-sdk/client-cloudwatch-logs";
-import { DeploymentLog } from '../../logging/domain/log';
+import { DeploymentLog } from '../domain/deployment-log';
 import {vi, expect,it, describe, beforeEach, MockedObject} from 'vitest';
-import { CloudWatchLogsAWSGateway, CloudWatchQuery } from "../application/usecase/get-deployment-logs/gateways/cloudwatch-logs-aws.gateway";
-import { CloudWatchLogsAWSGatewayException } from "../application/usecase/get-deployment-logs/gateways/cloudwatch-logs-aws-gateway.error";
+import { CloudWatchLogsAWSGateway, CloudWatchQuery } from "../modules/get-deployment-logs/gateways/cloudwatch-logs-aws.gateway";
+import { CloudWatchLogsAWSGatewayException } from "../modules/get-deployment-logs/gateways/cloudwatch-logs-aws-gateway.error";
 // Mock AWS SDK
 vi.mock('@aws-sdk/client-cloudwatch-logs');
 

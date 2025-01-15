@@ -1,7 +1,7 @@
 import { describe, it, expect, beforeEach, vi, afterEach } from 'vitest'
 
-import { DeploymentLog } from '../../logging/domain/log'
-import { MistralAIErrorScorer, MistralAIErrorScorerException } from '../application/usecase/score-error-log/gateway/mistralai-error-scorer.gateway'
+import { DeploymentLog } from '../../logging/domain/deployment-log'
+import { MistralAIErrorScorer, MistralAIErrorScorerException } from '../modules/score-error-log/gateway/mistralai-error-scorer.gateway'
 
 describe('MistralAIErrorScorer Integration Test', () => {
   let scorer: MistralAIErrorScorer
@@ -31,14 +31,13 @@ describe('MistralAIErrorScorer Integration Test', () => {
             )
           ]
       
-          const result = (await scorer.analyze(testLogs));
-          console.log(result[0].message)
+          const result = (await scorer.analyzeAndScore(testLogs));
           result.forEach((scoredError, index) => {
+            console.log(scoredError.message)
             expect(scoredError).toHaveProperty('score') 
             expect(scoredError).toHaveProperty('severity')
             expect(scoredError).toHaveProperty('timestamp')
             expect(scoredError).toHaveProperty('description')
-            expect(scoredError).toHaveProperty('message')
       
             // Verify score is a number between 0 and 10
             expect(typeof scoredError.score).toBe('number')

@@ -1,10 +1,10 @@
 import { expect, describe, it, beforeEach } from "vitest";
-import { CheckProjectUsecase } from "../application/usecase/check-project/check-project.usecase";
-import { CheckProjectService } from "../application/usecase/check-project/service/check-project.service";
+import { CheckProjectUsecase } from "../modules/check-project/check-project.usecase";
+import { CheckProjectService } from "../modules/check-project/service/check-project.service";
 
-import { CheckProjectPayload } from "../application/usecase/check-project/check-project.payload";
-import { CheckProjectException } from "../application/usecase/check-project/check-project.error";
-import { CheckProjectServiceImpl } from "../application/usecase/check-project/service/check-project.service.impl";
+import { CheckProjectPayload } from "../modules/check-project/check-project.payload";
+import { CheckProjectException } from "../modules/check-project/check-project.exception";
+import { CheckProjectServiceImpl } from "../modules/check-project/service/check-project.service.impl";
 
 describe('check project usecase', () => {
     let checkProjectUsecase: CheckProjectUsecase;

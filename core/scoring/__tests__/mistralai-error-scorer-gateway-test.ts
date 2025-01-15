@@ -1,7 +1,7 @@
 import { describe, it, expect, beforeEach, vi, afterEach } from 'vitest'
 
-import { DeploymentLog } from '../../logging/domain/log'
-import { MistralAIErrorScorer } from '../application/usecase/score-error-log/gateway/mistralai-error-scorer.gateway'
+import { DeploymentLog } from '../../logging/domain/deployment-log'
+import { MistralAIErrorScorer } from '../modules/score-error-log/gateway/mistralai-error-scorer.gateway'
 
 describe('MistralAIErrorScorer', () => {
   let scorer: MistralAIErrorScorer
@@ -65,7 +65,7 @@ describe('MistralAIErrorScorer', () => {
     // Mock the Mistral chat.complete method
     vi.spyOn(scorer.client.chat, 'complete').mockResolvedValue(mockResponse as any)
 
-    const result = await scorer.analyze(sampleLogs)
+    const result = await scorer.analyzeAndScore(sampleLogs)
 
     expect(result).toHaveLength(3)
     expect(result[0]).toMatchObject({
@@ -93,7 +93,7 @@ describe('MistralAIErrorScorer', () => {
       choices: [{ message: { content: null } }]
     } as any)
 
-    await expect(scorer.analyze(sampleLogs)).rejects.toThrow(
+    await expect(scorer.analyzeAndScore(sampleLogs)).rejects.toThrow(
       'Error while generating the score with Mistral'
     )
   })
@@ -109,7 +109,7 @@ describe('MistralAIErrorScorer', () => {
 
     vi.spyOn(scorer.client.chat, 'complete').mockResolvedValue(mockResponse as any)
 
-    const result = await scorer.analyze([])
+    const result = await scorer.analyzeAndScore([]);
     expect(result).toEqual([])
   })
 
@@ -120,7 +120,7 @@ describe('MistralAIErrorScorer', () => {
       new Error('API Error')
     )
 
-    await expect(scorer.analyze(sampleLogs)).rejects.toThrow('API Error')
+    await expect(scorer.analyzeAndScore(sampleLogs)).rejects.toThrow('API Error')
   })
 
   afterEach(() => {

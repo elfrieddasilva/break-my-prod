@@ -1,7 +1,7 @@
 import { describe, it, expect, beforeEach } from 'vitest'
 
-import { DeploymentLog } from '../../logging/domain/log'
-import { OpenAIErrorScorer } from '../application/usecase/score-error-log/gateway/openai-error-scorer.gateway'
+import { DeploymentLog } from '../../logging/domain/deployment-log'
+import { OpenAIErrorScorer } from '../modules/score-error-log/gateway/openai-error-scorer.gateway'
 
 describe('OpenAIErrorScorer', () => {
   let scorer: OpenAIErrorScorer
@@ -57,7 +57,7 @@ describe('OpenAIErrorScorer', () => {
       ];
       
 
-    const result = await scorer.analyze(mockLogs)
+    const result = await scorer.analyzeAndScore(mockLogs)
     expect(result).toBeDefined()
     // Add your assertions here
   })
@@ -65,7 +65,7 @@ describe('OpenAIErrorScorer', () => {
   it('should handle empty logs array', {
     retry: 2
   }, async () => {
-    const result = await scorer.analyze([])
+    const result = await scorer.analyzeAndScore([])
     expect(result).toEqual([])
   })
 

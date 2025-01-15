@@ -1,7 +1,7 @@
 import { expect, describe, it, test, beforeEach } from "vitest";
-import { InvalidGithubProjectException } from "../application/usecase/check-project/check-project.error";
-import { CheckProjectService } from "../application/usecase/check-project/service/check-project.service";
-import { CheckProjectServiceImpl } from "../application/usecase/check-project/service/check-project.service.impl";
+import { InvalidGithubProjectException } from "../modules/check-project/check-project.exception";
+import { CheckProjectService } from "../modules/check-project/service/check-project.service";
+import { CheckProjectServiceImpl } from "../modules/check-project/service/check-project.service.impl";
 
 
 describe('check project service impl', () => {
