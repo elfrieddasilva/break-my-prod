@@ -3,6 +3,7 @@
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
+import {useRouter} from "next/navigation";
 
 
 import { Button } from "@/components/ui/button"
@@ -23,10 +24,13 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
+import { useProjectService } from "@/context/DI";
 
 
 
 export default function Home() {
+  const router = useRouter();
+  const projectService = useProjectService();
  
   const formSchema = z.object({
     githubUrl: z.string().url(
@@ -48,7 +52,7 @@ export default function Home() {
   })
   
   const onSubmit = (values: FormType) => {
-    console.log(values)
+    router.push('/scoreboard');
   }
 
   return (
