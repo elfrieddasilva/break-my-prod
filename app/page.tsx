@@ -47,7 +47,6 @@ export default function Home() {
     resolver: zodResolver(formSchema),
     defaultValues: {
       githubUrl: "",
-      projectType: "",
     },
   })
   
@@ -69,7 +68,7 @@ export default function Home() {
                 This is the link to the project you want to deploy
               </FormDescription>
               <FormControl>
-                <Input className="focus:outline-none focus:ring focus:border-blue-500" placeholder="github url" {...field} />
+                <Input className="focus:outline-none focus:ring focus:border-blue-500" placeholder="https://github.com/" {...field} />
               </FormControl>
               
               <FormMessage />
@@ -81,8 +80,8 @@ export default function Home() {
           name="projectType"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Project Type</FormLabel>
-              <Select onValueChange={field.onChange} defaultValue={field.value}>
+              <FormLabel className="font-bold text-xl">Project Type</FormLabel>
+              <Select onValueChange={field.onChange} >
                 <FormControl>
                   <SelectTrigger>
                     <SelectValue placeholder="Select a project type" />

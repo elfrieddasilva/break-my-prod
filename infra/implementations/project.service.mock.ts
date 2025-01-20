@@ -30,6 +30,34 @@ export class ProjectServiceMock implements ProjectService {
             
             type: 'java'
 
+        },
+        {
+            id: "2",
+            url: "github.com/amirdas/project",
+            errorLogs: [
+                {
+                    description: "Invalid credentials specified",
+                    timestamp: new Date('2024-01-10T10:02:15Z'),
+                    severity: 'HIGH'
+                },
+                {
+                    description:"Buffer overflow",
+                    timestamp: new Date('2024-01-10T10:02:30Z'),
+                    severity: 'CRITICAL',
+                },
+                {
+                    description:"Null pointer exception",
+                    timestamp: new Date('2024-01-10T10:03:45Z'),
+                    severity: 'LOW',
+                }
+            ],
+            user: {
+                name: "amirdas"
+            },
+            score: 300,
+            
+            type: 'nodejs'
+
         }
     ]
     async getProjects(): Promise<Project[]> {
