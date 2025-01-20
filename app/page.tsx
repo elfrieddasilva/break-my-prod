@@ -4,6 +4,7 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
 
+
 import { Button } from "@/components/ui/button"
 import {
   Form,
@@ -15,6 +16,13 @@ import {
   FormMessage,
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select"
 
 
 
@@ -24,6 +32,9 @@ export default function Home() {
     githubUrl: z.string().url(
   "Invalid url",
     ),
+    projectType: z.string({
+      required_error: "Please select a project type",
+    })
   })
 
   type FormType = z.infer<typeof formSchema>;
@@ -32,6 +43,7 @@ export default function Home() {
     resolver: zodResolver(formSchema),
     defaultValues: {
       githubUrl: "",
+      projectType: "",
     },
   })
   
@@ -56,6 +68,28 @@ export default function Home() {
                 <Input className="focus:outline-none focus:ring focus:border-blue-500" placeholder="github url" {...field} />
               </FormControl>
               
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+         <FormField
+          control={form.control}
+          name="projectType"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Project Type</FormLabel>
+              <Select onValueChange={field.onChange} defaultValue={field.value}>
+                <FormControl>
+                  <SelectTrigger>
+                    <SelectValue placeholder="Select a project type" />
+                  </SelectTrigger>
+                </FormControl>
+                <SelectContent>
+                  <SelectItem value="nodejs">nodejs</SelectItem>
+                  <SelectItem value="java">java</SelectItem>
+                  <SelectItem value="python">python</SelectItem>
+                </SelectContent>
+              </Select>
               <FormMessage />
             </FormItem>
           )}
