@@ -10,6 +10,7 @@ import {
     StartBuildCommand,
     CodeBuildClientConfig,
 } from "@aws-sdk/client-codebuild";
+import { BuildSpecGenerator } from "./build-spec-generator";
 
 interface CodeBuildConfig {
     region?: string;
@@ -18,12 +19,14 @@ interface CodeBuildConfig {
 
 export class CodeBuildDeployGateway implements AWSDeployGateway {
     private readonly client: CodeBuildClient;
+    private buildSpecGenerator: BuildSpecGenerator;
 
     constructor(config: CodeBuildConfig = {}) {
         this.client = new CodeBuildClient({
             region: config.region || process.env.AWS_REGION || 'us-east-1',
             credentials: config.credentials
         });
+        this.buildSpecGenerator = new BuildSpecGenerator();
     }
 
     async createAWSDeploymentProject(params: ProjectCreationParams) {
@@ -80,7 +83,7 @@ export class CodeBuildDeployGateway implements AWSDeployGateway {
             source: {
                 type: SourceType.GITHUB,
                 location: params.githubUrl,
-                buildspec: this.generateBuildSpec(),
+                buildspec: this.buildSpecGenerator.generateBuildSpecFor(params.projectType),
             },
             description: `Deployment project for ${params.projectName}`,
             timeoutInMinutes: 30, // Configurable build timeout
@@ -96,40 +99,4 @@ export class CodeBuildDeployGateway implements AWSDeployGateway {
         });
     }
 
-    private generateBuildSpec(): string {
-        // You can customize this based on your needs
-        const buildSpec = {
-            version: '0.2',
-            phases: {
-                install: {
-                    'runtime-versions': {
-                        nodejs: '18'
-                    }
-                },
-                pre_build: {
-                    commands: [
-                        'npm ci'
-                    ]
-                },
-                build: {
-                    commands: [
-                        'npm run build'
-                    ]
-                },
-                post_build: {
-                    commands: [
-                        'aws s3 sync ./dist s3://${BUCKET_NAME}/'
-                    ]
-                }
-            },
-            artifacts: {
-                files: [
-                    '**/*'
-                ],
-                'base-directory': 'dist'
-            }
-        };
-
-        return JSON.stringify(buildSpec);
-    }
 }

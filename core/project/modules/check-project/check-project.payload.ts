@@ -1,3 +1,3 @@
-export interface CheckProjectPayload {
-    githubUrl: string;
+export type CheckProjectPayload  = {
+    url: string;
 }

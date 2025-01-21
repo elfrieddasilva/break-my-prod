@@ -2,11 +2,11 @@ import { BaseController } from "@/core/shared/base-controller";
 import { DeployProjectPayload } from "../deploy-project.payload";
 import { DeployProjectUsecase } from "../deploy-project.usecase";
 
+
+
 export class DeployProjectController extends BaseController {
-    private deployProjectUsecase: DeployProjectUsecase;
-    constructor(deployProjectUsecase: DeployProjectUsecase) {
+    constructor(private deployProjectUsecase: DeployProjectUsecase) {
         super();
-        this.deployProjectUsecase = deployProjectUsecase;
     }
     async executeImpl(req: Request) {
         const payload = await req.json() as DeployProjectPayload;

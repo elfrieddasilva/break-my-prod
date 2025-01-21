@@ -16,7 +16,8 @@ export class DeployProjectServiceImpl implements DeployProjectService {
                 projectName,
                 roleArn: "",
                 buildOutputBucket: "",
-                githubUrl: payload.url
+                githubUrl: payload.url,
+                projectType: payload.projectType
             });
             return await this.awsDeploymentGateway.triggerProjectDeployment(projectName);
         } catch (error) {
